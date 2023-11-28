@@ -1,18 +1,17 @@
 from machine import Pin, PWM
 from time import sleep
 
+main_pin1 = Pin(6)  
+main_pin2 = Pin(4) 
 
-main_pin1 = Pin(15)  
-main_pin2 = Pin(16) 
-
-music_buzzer1 = PWM(main_pin1)
-music_buzzer2 = PWM(main_pin2)
+music_buzzer = PWM(main_pin1)
+music_speaker = PWM(main_pin2)
 
 
-music_buzzer1.freq(500)
-music_buzzer2.freq(500)
-music_buzzer1.duty_u16(1000)
-music_buzzer2.duty_u16(1000)
+music_buzzer.freq(350)
+music_speaker.freq(500)
+music_buzzer.duty_u16(1000)
+music_speaker.duty_u16(1000)
 
 notes = {"C0": 16,
     "C#0": 17,
@@ -113,7 +112,7 @@ notes = {"C0": 16,
     "C8": 4186
 }
 
-castlevania_melody1 = ['D4', 'D3', 'D2', 'D4', 'D4', 'D3', 'D2', 'D4', 'D4', 'D3', 'D2', 'D4', 'D4', 'D3', 'D2', 'D4', 'D3']
+castlevania_melody1 = [ 'D4', 'D3', 'D2', 'D4', 'D4', 'D3', 'D2', 'D4', 'D4', 'D3', 'D2', 'D4', 'D3']
 castlevania_melody2 = ['G4', 'D5', 'C5', 'A#4', 'A4', 'A#4', 'A4', 'F4', 'A4', 'A#4', 'C5', 'A#4', 'A4', 'F4', 'A4', 'G4', 'G4']
 
 def song_tone(melody, pwm_obj):
@@ -130,8 +129,8 @@ def silence(pwm_obj):
 
 try:
     while True:
-        song_tone(castlevania_melody1, music_buzzer1)
-        song_tone(castlevania_melody2, music_buzzer2)
+        song_tone(castlevania_melody1, music_buzzer)
+        song_tone(castlevania_melody2, music_speaker)
 except KeyboardInterrupt:
-    silence(music_buzzer1)
-    silence(music_buzzer2)
+    silence(music_buzzer)
+    silence(music_speaker)
